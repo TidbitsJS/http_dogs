@@ -1,5 +1,11 @@
 import { NextResponse } from 'next/server';
 
+export const corsHeaders = {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET",
+    "Access-Control-Allow-Headers": "Content-Type, Authorization",
+};
+
 export async function GET(request, { params }) {
     try {
         const statusCode = params.code
@@ -17,7 +23,7 @@ export async function GET(request, { params }) {
         }
 
         const data = await response.json();
-        return NextResponse.json({ data });
+        return NextResponse.json({ data }, { headers: corsHeaders });
     } catch (error) {
         console.error('Error fetching data:', error.message);
         return NextResponse.json({ error: 'Error fetching data. Please try again later.' }, { status: 500 });
